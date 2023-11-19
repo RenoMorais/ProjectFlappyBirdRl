@@ -88,7 +88,11 @@ class TextFlappyBirdEnvSimple(gym.Env):
     done = not alive
     obs = self._get_observation()
 
+
     reward = 1 # As long as it stays alive the cummulative reward is increased
+    
+    #if alive == False:
+     # reward = 10
 
     info = self._get_info()
     return obs, reward, done, False, info

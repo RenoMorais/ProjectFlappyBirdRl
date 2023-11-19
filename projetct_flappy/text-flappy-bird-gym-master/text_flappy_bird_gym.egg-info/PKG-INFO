@@ -1,0 +1,28 @@
+Metadata-Version: 2.1
+Name: text-flappy-bird-gym
+Version: 0.1.0
+Summary: Implementation of two OpenAI Gym learning environments of a simple unit-pixel player version of the Flappy Bird.
+Home-page: https://gitlab-research.centralesupelec.fr/stergios.christodoulidis/text-flappy-bird-gym
+Author: Stergios C.
+License: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Education
+Classifier: Intended Audience :: Science/Research
+Classifier: Topic :: Scientific/Engineering
+Classifier: Topic :: Scientific/Engineering :: Mathematics
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: Topic :: Software Development
+Classifier: Topic :: Software Development :: Libraries
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.6
+License-File: LICENCE
+Requires-Dist: gymnasium==0.27.1
+Requires-Dist: numpy==1.24.2

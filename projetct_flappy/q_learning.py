@@ -15,6 +15,7 @@ from scipy import array, newaxis
 from IPython.display import clear_output
 import os, sys
 import gymnasium as gym
+import text_flappy_bird_gym
 import time
 from tqdm import tqdm
 import pickle
@@ -117,8 +118,8 @@ for algorithm in ["Q-learning", "Sarsa", "RandomAgent"]:
 
     for i in range(10000):
         
-        if i % 100 == 0:
-            print("step: ", i)
+        #if i % 10000 == 0:
+         #   print("step: ", i)
             
         state = env.reset()[0]
         #print(state)
@@ -135,6 +136,9 @@ for algorithm in ["Q-learning", "Sarsa", "RandomAgent"]:
 # Apply action and return new observation of the environment
             next_state, reward, done, truncate, info = env.step(action)
 
+            #if i % 10000 == 0:
+                #print("reward: ", reward)
+
             
             #For SARSA acquiring the on-policy next action
             next_action = current_agent.act(next_state)
@@ -146,7 +150,7 @@ for algorithm in ["Q-learning", "Sarsa", "RandomAgent"]:
             print("info ",info)"""
 
             if done == True:
-                reward = -1
+                reward = 10
 
                 # Update total reward 
             total_reward += reward
