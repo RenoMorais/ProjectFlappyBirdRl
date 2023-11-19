@@ -2,7 +2,7 @@ import os, sys
 import gymnasium as gym
 import time
 
-import text_flappy_bird_gym
+import text_flappy_bird_gym       
 
 if __name__ == '__main__':
 

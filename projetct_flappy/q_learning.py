@@ -16,7 +16,6 @@ from IPython.display import clear_output
 import os, sys
 import gymnasium as gym
 import time
-import text_flappy_bird_gym
 from tqdm import tqdm
 import pickle
 from collections import defaultdict
@@ -171,7 +170,6 @@ plt.xlim(0,10000)
 plt.ylim(0,400)
 plt.legend()
 plt.show()
-
 
 """
 
