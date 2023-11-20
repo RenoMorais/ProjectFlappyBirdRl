@@ -55,17 +55,18 @@ class Q_Agent(Agent):
     
     """        
     
-    def __init__(self, eps, step_size, discount):
+    def __init__(self, eps, step_size, discount,q):
         self.eps = eps
         self.step_size = step_size
         self.discount = discount
+        self.q = q
         
     def update(self):
         old_value = q[state][action]
         next_max = np.max(q[next_state])
         
         new_value = (1 - self.step_size) * old_value + self.step_size * (reward +  self.discount * next_max)
-        q[state][action] = new_value
+        self.q[state][action] = new_value
 
 class SarsaAgent(Agent):
     """
@@ -73,22 +74,23 @@ class SarsaAgent(Agent):
     
     """    
     
-    def __init__(self, eps, step_size, discount):
+    def __init__(self, eps, step_size, discount,q):
         self.eps = eps
         self.step_size = step_size
         self.discount = discount
+        self.q = q
         
     def update(self):
                 
-        q[state][action]+= self.step_size * \
-        (reward + self.discount * (q[next_state][next_action]) - q[state][action])
+        self.q[state][action]+= self.step_size * \
+        (reward + self.discount * (self.q[next_state][next_action]) - self.q[state][action])
 
 class RandomAgent():
     """
     The Random Agent Class
     
     """
-    def __init__(self, eps, step_size, discount):
+    def __init__(self, eps, step_size, discount,**kwargs):
         self.eps = eps
         self.eps=1
         self.step_size = step_size
@@ -113,10 +115,15 @@ for algorithm in ["Q-learning", "Sarsa", "RandomAgent"]:
     q = defaultdict(lambda: np.zeros(2))  # The dict of action-value estimates.
     
     all_reward_sums[algorithm] = []
-    current_agent = agents[algorithm](eps=0.2, step_size = 0.7, discount=0.95)
+    
+    current_agent = agents[algorithm](eps=0.2, step_size = 0.7, discount=0.95,q=q)
     #total_epochs = 0
+    time_run = time.time()
 
     for i in range(10000):
+        
+
+
         
         #if i % 10000 == 0:
          #   print("step: ", i)
@@ -140,7 +147,7 @@ for algorithm in ["Q-learning", "Sarsa", "RandomAgent"]:
                 #print("reward: ", reward)
 
             
-            #For SARSA acquiring the on-policy next action
+            #For SARSA acquiring the on-po  licy next action
             next_action = current_agent.act(next_state)
             
             """print("next_state: ",next_state)
@@ -150,7 +157,7 @@ for algorithm in ["Q-learning", "Sarsa", "RandomAgent"]:
             print("info ",info)"""
 
             if done == True:
-                reward = 10
+                reward = -1
 
                 # Update total reward 
             total_reward += reward
@@ -164,16 +171,55 @@ for algorithm in ["Q-learning", "Sarsa", "RandomAgent"]:
             env.close()
             all_the_q_tables[algorithm] = q
         
+    time_finish = time.time()
+
+    time_dif = time_finish - time_run
+
+    #print(time_dif)
 
 
-for algorithm in ["Q-learning", "Sarsa", "RandomAgent"]:
-    plt.plot(all_reward_sums[algorithm], label=algorithm)
-plt.xlabel("Episodes")
-plt.ylabel("Sum of\n rewards\n during\n episode",rotation=0, labelpad=40)
-plt.xlim(0,10000)
-plt.ylim(0,400)
-plt.legend()
-plt.show()
+
+print(all_the_q_tables)
+
+def play_game (q):
+      
+            state = env.reset()[0]
+            #print(state)
+            done = False
+            total_reward = 0
+            while not done:
+
+                os.system("cls")
+                sys.stdout.write(env.render())
+                time.sleep(0.2)
+
+                current_agent = agents["Q-learning"](eps=0, step_size = 0.7, discount=0.95,q = q)
+
+                action = current_agent.act(state) # Apply action and return new observation of the environment
+                next_state, reward, done, truncate, info = env.step(action)
+
+
+    #Update q values table
+                    
+                state = next_state
+                if done: 
+                        break
+                
+            env.close()
+            
+
+#for algorithm in ["Q-learning", "Sarsa", "RandomAgent"]:
+#    plt.plot(all_reward_sums[algorithm], label=algorithm)
+#plt.xlabel("Episodes")
+#plt.ylabel("Sum of\n rewards\n during\n episode",rotation=0, labelpad=40)
+#plt.xlim(0,10000)
+#plt.ylim(0,400)
+#plt.legend()
+#plt.show()
+
+print("terminou")
+
+play_game(all_the_q_tables["Q-learning"])
 
 """
 
