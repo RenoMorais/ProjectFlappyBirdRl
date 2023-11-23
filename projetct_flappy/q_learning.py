@@ -62,8 +62,8 @@ class Q_Agent(Agent):
         self.q = q
         
     def update(self):
-        old_value = q[state][action]
-        next_max = np.max(q[next_state])
+        old_value = self.q[state][action]
+        next_max = np.max(self.q[next_state])
         
         new_value = (1 - self.step_size) * old_value + self.step_size * (reward +  self.discount * next_max)
         self.q[state][action] = new_value
@@ -116,11 +116,10 @@ for algorithm in ["Q-learning", "Sarsa", "RandomAgent"]:
     
     all_reward_sums[algorithm] = []
     
-    current_agent = agents[algorithm](eps=0.2, step_size = 0.7, discount=0.95,q=q)
-    #total_epochs = 0
-    time_run = time.time()
+    current_agent = agents[algorithm](eps=0.2, step_size = 0.9, discount=0.3,q=q)
+    total_epochs = 0
 
-    for i in range(10000):
+    for i in tqdm(range(20000)):
         
 
 
@@ -166,20 +165,16 @@ for algorithm in ["Q-learning", "Sarsa", "RandomAgent"]:
                 
             state = next_state
             if done: 
-                    break
-            all_reward_sums[algorithm].append(total_reward)
-            env.close()
-            all_the_q_tables[algorithm] = q
+                break
+        all_reward_sums[algorithm].append(total_reward)
+        env.close()
+        all_the_q_tables[algorithm] = q
         
-    time_finish = time.time()
-
-    time_dif = time_finish - time_run
-
     #print(time_dif)
 
 
 
-print(all_the_q_tables)
+#print(all_the_q_tables)
 
 def play_game (q):
       
@@ -187,23 +182,29 @@ def play_game (q):
             #print(state)
             done = False
             total_reward = 0
-            while not done:
 
-                os.system("cls")
-                sys.stdout.write(env.render())
-                time.sleep(0.2)
+            os.system("cls")
+            sys.stdout.write(env.render())
+            time.sleep(0.2)
 
-                current_agent = agents["Q-learning"](eps=0, step_size = 0.7, discount=0.95,q = q)
+            #while not done:
 
-                action = current_agent.act(state) # Apply action and return new observation of the environment
-                next_state, reward, done, truncate, info = env.step(action)
+            current_agent = agents["Q-learning"](eps=0, step_size = 0.7, discount=0.95,q = q)
+
+            action = current_agent.act(state) # Apply action and return new observation of the environment
+            next_state, reward, done, truncate, info = env.step(action)
+
+            print("done:", done)
+            print("action:", action)
+
+            
 
 
     #Update q values table
                     
-                state = next_state
-                if done: 
-                        break
+            state = next_state
+            
+            #print("q values:", q)
                 
             env.close()
             
@@ -217,9 +218,13 @@ def play_game (q):
 #plt.legend()
 #plt.show()
 
-print("terminou")
 
-play_game(all_the_q_tables["Q-learning"])
+
+def main():
+    play_game(all_the_q_tables["Q-learning"])
+
+if __name__ == "__main__":
+    main()
 
 """
 

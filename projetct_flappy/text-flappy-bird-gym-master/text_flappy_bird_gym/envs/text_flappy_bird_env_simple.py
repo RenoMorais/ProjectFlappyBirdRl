@@ -84,15 +84,13 @@ class TextFlappyBirdEnvSimple(gym.Env):
     * an info dictionary
     """
 
-    alive, reward = self._game.update_state(action) # this needs to return True/False if the player is alive
+    alive = self._game.update_state(action) # this needs to return True/False if the player is alive
     done = not alive
     obs = self._get_observation()
 
 
-    #reward = 1 # As long as it stays alive the cummulative reward is increased
+    reward = 1 # As long as it stays alive the cummulative reward is increased
     
-    #if alive == False:
-     # reward = -10
 
     info = self._get_info()
     return obs, reward, done, False, info

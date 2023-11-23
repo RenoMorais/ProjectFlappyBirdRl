@@ -49,8 +49,8 @@ class FlappyBirdLogic:
     # stores the action
     self.player_last_action = action
 
-    reward = 0.1  # reward for staying alive
-    terminal = False
+    #reward = 0.1  # reward for staying alive
+    #terminal = False
 
     # when first pipe crosses the center of the screen add another one
     if self.upper_pipes[0]['x'] == int(self._screen_width/2)-1:
@@ -84,7 +84,7 @@ class FlappyBirdLogic:
     if self.player_alive and self.player_x == self.upper_pipes[0]['x'] + 1:
       self.score += 1
       
-      reward = 1
+      #reward = 1
       
 
     # remove first pipe if its out of the screen
@@ -92,4 +92,4 @@ class FlappyBirdLogic:
         self.upper_pipes.pop(0)
         self.lower_pipes.pop(0)
 
-    return self.player_alive, reward
+    return self.player_alive
