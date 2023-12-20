@@ -14,7 +14,7 @@ Esse diretório contém a implementação dos algoritmos Q-Learning e SARSA para
 
     ```pyenv install 3.9.10```
 
-2. Seleção do python 3.9 instalado anteriormente para meu diretório atual:
+2. Seleção do python 3.9 instalado anteriormente para o diretório atual:
 
     ```pyenv local 3.9.10```
 
